@@ -27,14 +27,9 @@ namespace ClientShared_NetStandard20
 
             _client = new HttpClient(httpClientHandler);
             _client.BaseAddress = baseAddress;
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent + "/1.0");
-            _client.DefaultRequestHeaders.Accept.ParseAdd("*/*");
-            _client.DefaultRequestHeaders.AcceptEncoding.ParseAdd("gzip, deflate, br");
-            _client.DefaultRequestHeaders.Connection.ParseAdd("keep-alive");
-            _client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue { NoCache = true };
-            _client.DefaultRequestHeaders.TransferEncodingChunked = false;
-            _client.DefaultRequestHeaders.ExpectContinue = false;
-            _client.Timeout = TimeSpan.FromMinutes(30);
+
+            // Uncommenting the following line will fix the issue of .NET Core:
+            //_client.DefaultRequestHeaders.ExpectContinue = true;
         }
 
         public async Task<bool> IsHealthy()
